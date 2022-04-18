@@ -1,4 +1,5 @@
-﻿using Entities.Concrete;
+﻿using Core.Utilities.Results;
+using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,8 @@ namespace Business.Abstract
         List<Student> GetByStudentSchoolId(int id);
         List<Student> GetByStudentCardNumber(int cardId);
         List<StudentDetailDTO> GetStudentDetails();
+        Student GetByStudentId(int id);
+        IResult Add(Student student);
 
     }
 }

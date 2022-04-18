@@ -20,7 +20,8 @@ namespace DataAccess.Concrete.EntityFramework
                 var result = from s in context.Students
                              join s2 in context.Schools on 
                              s.SchoolId equals s2.SchoolId
-                             select new StudentDetailDTO {StudentId= s.StudentId, 
+                             select new StudentDetailDTO {
+                                 StudentId= s.StudentId, 
                                  StudentFirstName=s.StudentFirstName, 
                                  StudentLastName=s.StudentLastName,
                                  StudentSchoolId = s.StudentSchoolId,
