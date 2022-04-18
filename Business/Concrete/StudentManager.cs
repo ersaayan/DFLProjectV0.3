@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
@@ -17,35 +18,39 @@ namespace Business.Concrete
             _studentDal = studentDal;
         }
 
-        public List<Student> GetByStudentSchoolId(int id)
+        public IDataResult<List<Student>> GetByStudentSchoolId(int id)
         {
-            return _studentDal.GetAll(s => s.StudentSchoolId == id);
+            return new SuccessDataResult<List<Student>>(_studentDal.GetAll(s => s.StudentSchoolId == id), Messages.StudentListed);
         }
 
-        public List<Student> GetAll()
+        public IDataResult<List<Student>> GetAll()
         {
-            return _studentDal.GetAll();
+            return new  SuccessDataResult<List<Student>>(_studentDal.GetAll(),Messages.StudentListed);
         }
 
-        public List<Student> GetByStudentCardNumber(int cardId)
+        public IDataResult<List<Student>> GetByStudentCardNumber(int cardId)
         {
-            return _studentDal.GetAll(s=>s.StudentCardNumber == cardId);
+            return new SuccessDataResult<List<Student>>(_studentDal.GetAll(s=>s.StudentCardNumber == cardId), Messages.StudentListed);
         }
 
-        public List<StudentDetailDTO> GetStudentDetails()
+        public IDataResult<List<StudentDetailDTO>> GetStudentDetails()
         {
-            return _studentDal.GetStudentDetails();
+            return new SuccessDataResult<List<StudentDetailDTO>>(_studentDal.GetStudentDetails(), Messages.StudentNotListed);
         }
 
         public IResult Add(Student student)
         {
+            if (student.StudentFirstName.Length <2)
+            {
+                return new ErrorResult(Messages.StudentNameInvalid);
+            }
             _studentDal.Add(student);
-            return new Result(true, "Öğrenci eklendi.");
+            return new SuccessResult(Messages.StudentAdded);
         }
 
-        public Student GetByStudentId(int id)
+        public IDataResult<Student> GetByStudentId(int id)
         {
-            return _studentDal.Get(s=>s.StudentId == id);
+            return new SuccessDataResult<Student>(_studentDal.Get(s=>s.StudentId == id), Messages.StudentListed);
         }
     }
 }

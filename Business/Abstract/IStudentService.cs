@@ -9,11 +9,11 @@ namespace Business.Abstract
 {
     public interface IStudentService
     {
-        List<Student> GetAll();
-        List<Student> GetByStudentSchoolId(int id);
-        List<Student> GetByStudentCardNumber(int cardId);
-        List<StudentDetailDTO> GetStudentDetails();
-        Student GetByStudentId(int id);
+        IDataResult<List<Student>> GetAll();
+        IDataResult<List<Student>> GetByStudentSchoolId(int id);
+        IDataResult<List<Student>> GetByStudentCardNumber(int cardId);
+        IDataResult<List<StudentDetailDTO>> GetStudentDetails();
+        IDataResult<Student> GetByStudentId(int id);
         IResult Add(Student student);
 
     }

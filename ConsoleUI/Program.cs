@@ -1,6 +1,7 @@
 ﻿using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
+using Entities.Concrete;
 using System;
 
 namespace ConsoleUI
@@ -17,15 +18,25 @@ namespace ConsoleUI
         {
             StudentManager studentManager = new StudentManager(new EfStudentDal());
 
-            //foreach (var item in studentManager.GetAll())
-            // {
-            //     Console.WriteLine("Öğrenci No: "+item.StudentSchoolId + " Öğrenci Adı Ve Soyadı: " + item.StudentFirstName +" " +item.StudentLastName + " Öğrenci Kart Numarası: " + item.StudentCardNumber );
-            // }
+            var result = studentManager.GetStudentDetails();
 
-            foreach (var item in studentManager.GetStudentDetails())
+            if (result.IsSuccess==true)
             {
-                Console.WriteLine("Öğrenci No: " + item.StudentSchoolId + " Öğrenci Adı Ve Soyadı: " + item.StudentFirstName + " " + item.StudentLastName + " Öğrenci Kart Numarası: " + item.StudentCardNumber + " Okul Adı: " + " " + item.SchoolName);
+                foreach (var item in result.Data)
+                {
+                    Console.WriteLine("Öğrenci IDsi: " + item.StudentId + " " + "Öğrenci No: " + item.StudentSchoolId + " Öğrenci Adı Ve Soyadı: " + item.StudentFirstName + " " + item.StudentLastName + " Okul Adı: " + item.SchoolName);
+                    Console.WriteLine();
+                    Console.WriteLine(result.Message);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+            
+
+
+
         }
     }
 }
