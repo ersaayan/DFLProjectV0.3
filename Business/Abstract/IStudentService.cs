@@ -13,8 +13,11 @@ namespace Business.Abstract
         IDataResult<List<Student>> GetByStudentSchoolId(int id);
         IDataResult<List<Student>> GetByStudentCardNumber(int cardId);
         IDataResult<List<StudentDetailDTO>> GetStudentDetails();
+        IDataResult<StudentDetailDTO> GetDetailByStudentSchoolId(int studentSchoolId);
         IDataResult<Student> GetByStudentId(int id);
         IResult Add(Student student);
+        IResult Delete(Student student);
+        IResult Update(Student student);
 
     }
 }
