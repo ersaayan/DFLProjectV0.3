@@ -22,8 +22,8 @@ namespace WebAPI.Controllers
             _studentService = studentService;
         }
 
-        [HttpGet]
-        public IActionResult Get()
+        [HttpGet("getall")]
+        public IActionResult GetAll()
         {
         
             var result = _studentService.GetAll();
@@ -34,8 +34,52 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost]
-        public IActionResult Post(Student student)
+        [HttpGet("getbystudentschoolid")]
+        public IActionResult GetByStudentSchoolId(int id)
+        {
+            var result = _studentService.GetByStudentSchoolId(id);
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("getbystudentcardnumber")]
+        public IActionResult GetByStudentCardNumber(int cardId)
+        {
+            var result = _studentService.GetByStudentCardNumber(cardId);
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("getstudentdetail")]
+        public IActionResult GetStudentDetails()
+        {
+            var result = _studentService.GetStudentDetails();
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("getdetailbystudentschoolid")]
+        public IActionResult GetDetailByStudentSchoolId(int studentSchoolId)
+        {
+            var result = _studentService.GetDetailByStudentSchoolId(studentSchoolId);
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPost("add")]
+        public IActionResult Add(Student student)
         {
             var result = _studentService.Add(student);
             if (result.IsSuccess)
@@ -44,5 +88,28 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
+        [HttpPost("delete")]
+        public IActionResult Delete(Student student)
+        {
+            var result = _studentService.Delete(student);
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPost("update")]
+        public IActionResult Update(Student student)
+        {
+            var result = _studentService.Update(student);
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
     }
 }

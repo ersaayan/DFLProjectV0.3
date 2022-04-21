@@ -17,23 +17,33 @@ namespace Business.Concrete
             _studentDal = studentDal;
         }
 
-        public IDataResult<List<Student>> GetByStudentSchoolId(int id)
+        public IDataResult<Student> GetByStudentSchoolId(int id)
         {
-            return new SuccessDataResult<List<Student>>(_studentDal.GetAll(s => s.StudentSchoolId == id), Messages.StudentListed);
+            var result = _studentDal.Get(s => s.StudentSchoolId == id);
+            if (result == null)
+            {
+                return new ErrorDataResult<Student>(Messages.StudentNotFound);
+            }
+            return new SuccessDataResult<Student>(_studentDal.Get(s => s.StudentSchoolId == id), Messages.StudentListed);
         }
 
         public IDataResult<List<Student>> GetAll()
         {
             if (DateTime.Now.Hour==09)
             {
-                return new ErrorDataResult<List<Student>>(Messages.StudentNotListed);
+                return new ErrorDataResult<List<Student>>(Messages.MeintenanceTime);
             }
             return new  SuccessDataResult<List<Student>>(_studentDal.GetAll(),Messages.StudentListed);
         }
 
-        public IDataResult<List<Student>> GetByStudentCardNumber(int cardId)
+        public IDataResult<Student> GetByStudentCardNumber(int cardId)
         {
-            return new SuccessDataResult<List<Student>>(_studentDal.GetAll(s=>s.StudentCardNumber == cardId), Messages.StudentListed);
+            var result = _studentDal.Get(s => s.StudentCardNumber == cardId);
+            if (result == null)
+            {
+                return new ErrorDataResult<Student>(Messages.StudentNotFound);
+            }
+            return new SuccessDataResult<Student>(_studentDal.Get(s=>s.StudentCardNumber == cardId), Messages.StudentListed);
         }
 
         public IDataResult<List<StudentDetailDTO>> GetStudentDetails()
@@ -53,6 +63,11 @@ namespace Business.Concrete
 
         public IDataResult<Student> GetByStudentId(int id)
         {
+            var result = _studentDal.Get(s => s.StudentId == id);
+            if (result == null)
+            {
+                return new ErrorDataResult<Student>(Messages.StudentNotFound);
+            }
             return new SuccessDataResult<Student>(_studentDal.Get(s=>s.StudentId == id), Messages.StudentListed);
         }
 
@@ -72,6 +87,11 @@ namespace Business.Concrete
 
         public IDataResult<StudentDetailDTO> GetDetailByStudentSchoolId(int studentSchoolId)
         {
+            var result = _studentDal.GetDetail(s => s.StudentSchoolId == studentSchoolId);
+            if (result == null)
+            {
+                return new ErrorDataResult<StudentDetailDTO>(Messages.StudentNotFound);
+            }
             return new SuccessDataResult<StudentDetailDTO>(_studentDal.GetDetail(s=>s.StudentSchoolId==studentSchoolId), Messages.StudentListed);
         }
     }

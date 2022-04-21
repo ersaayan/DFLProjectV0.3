@@ -10,8 +10,8 @@ namespace Business.Abstract
     public interface IStudentService
     {
         IDataResult<List<Student>> GetAll();
-        IDataResult<List<Student>> GetByStudentSchoolId(int id);
-        IDataResult<List<Student>> GetByStudentCardNumber(int cardId);
+        IDataResult<Student> GetByStudentSchoolId(int id);
+        IDataResult<Student> GetByStudentCardNumber(int cardId);
         IDataResult<List<StudentDetailDTO>> GetStudentDetails();
         IDataResult<StudentDetailDTO> GetDetailByStudentSchoolId(int studentSchoolId);
         IDataResult<Student> GetByStudentId(int id);
