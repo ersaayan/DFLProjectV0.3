@@ -1,8 +1,12 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Entities.DTOs;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 
@@ -29,11 +33,11 @@ namespace Business.Concrete
 
         public IDataResult<List<Student>> GetAll()
         {
-            if (DateTime.Now.Hour==09)
+            if (DateTime.Now.Hour == 09)
             {
                 return new ErrorDataResult<List<Student>>(Messages.MeintenanceTime);
             }
-            return new  SuccessDataResult<List<Student>>(_studentDal.GetAll(),Messages.StudentListed);
+            return new SuccessDataResult<List<Student>>(_studentDal.GetAll(), Messages.StudentListed);
         }
 
         public IDataResult<Student> GetByStudentCardNumber(int cardId)
@@ -43,7 +47,7 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<Student>(Messages.StudentNotFound);
             }
-            return new SuccessDataResult<Student>(_studentDal.Get(s=>s.StudentCardNumber == cardId), Messages.StudentListed);
+            return new SuccessDataResult<Student>(_studentDal.Get(s => s.StudentCardNumber == cardId), Messages.StudentListed);
         }
 
         public IDataResult<List<StudentDetailDTO>> GetStudentDetails()
@@ -51,12 +55,10 @@ namespace Business.Concrete
             return new SuccessDataResult<List<StudentDetailDTO>>(_studentDal.GetStudentDetails(), Messages.StudentListed);
         }
 
+        [ValidationAspect(typeof(StudentValidator))]
         public IResult Add(Student student)
         {
-            if (student.StudentFirstName.Length <2)
-            {
-                return new ErrorResult(Messages.StudentNameInvalid);
-            }
+
             _studentDal.Add(student);
             return new SuccessResult(Messages.StudentAdded);
         }
@@ -68,7 +70,7 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<Student>(Messages.StudentNotFound);
             }
-            return new SuccessDataResult<Student>(_studentDal.Get(s=>s.StudentId == id), Messages.StudentListed);
+            return new SuccessDataResult<Student>(_studentDal.Get(s => s.StudentId == id), Messages.StudentListed);
         }
 
         public IResult Delete(Student student)
@@ -92,7 +94,7 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<StudentDetailDTO>(Messages.StudentNotFound);
             }
-            return new SuccessDataResult<StudentDetailDTO>(_studentDal.GetDetail(s=>s.StudentSchoolId==studentSchoolId), Messages.StudentListed);
+            return new SuccessDataResult<StudentDetailDTO>(_studentDal.GetDetail(s => s.StudentSchoolId == studentSchoolId), Messages.StudentListed);
         }
     }
 }
