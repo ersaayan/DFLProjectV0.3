@@ -55,7 +55,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<StudentDetailDTO>>(_studentDal.GetStudentDetails(), Messages.StudentListed);
         }
 
-        [ValidationAspect(typeof(StudentValidator))]
+        //[ValidationAspect(typeof(StudentValidator))]
         public IResult Add(Student student)
         {
 
